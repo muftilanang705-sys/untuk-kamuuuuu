@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kamu ❤️</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Poppins", sans-serif;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      transition: opacity 0.8s;
+    }
+
+    /* Grid foto */
+    .bg-grid {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      z-index: 0;
+    }
+
+    .bg-grid div {
+      background-size: cover;
+      background-position: center;
+      transform: scale(1.2);
+      opacity: 0;
+      animation: fadeZoom 2s ease forwards;
+    }
+
+    .foto1 { background-image: url("foto1.jpg"); animation-delay: 0.2s; }
+    .foto2 { background-image: url("foto2.jpg"); animation-delay: 0.4s; }
+    .foto3 { background-image: url("foto3.jpg"); animation-delay: 0.6s; }
+    .foto4 { background-image: url("foto4.jpg"); animation-delay: 0.8s; }
+
+    @keyframes fadeZoom {
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    /* Overlay pink */
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 77, 109, 0.55);
+      z-index: 1;
+    }
+
+    /* Isi hero */
+    .hero {
+      text-align: center;
+      color: white;
+      position: relative;
+      z-index: 2;
+      padding: 20px;
+      animation: slideUp 1.5s ease forwards;
+      opacity: 0;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    h1 { font-size: 2.5rem; margin-bottom: 10px; }
+    p { font-size: 1.2rem; margin-bottom: 20px; }
+
+    a {
+      display: inline-block;
+      padding: 10px 20px;
+      background: white;
+      color: #ff4d6d;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: all 0.3s;
+      animation: glow 2s infinite alternate;
+    }
+
+    a:hover { background: #ff4d6d; color: white; }
+
+    @keyframes glow {
+      from { box-shadow: 0 0 5px #fff, 0 0 10px #ff4d6d; }
+      to { box-shadow: 0 0 20px #fff, 0 0 30px #ff4d6d; }
+    }
+
+    /* Pulse lembut + glow tambahan saat klik */
+    .pulse {
+      animation: pulseGlow 0.4s forwards;
+    }
+
+    @keyframes pulseGlow {
+      0% { transform: scale(1); box-shadow: 0 0 10px #fff, 0 0 20px #ff4d6d; }
+      50% { transform: scale(1.15); box-shadow: 0 0 25px #fff, 0 0 40px #ff4d6d; }
+      100% { transform: scale(1); box-shadow: 0 0 10px #fff, 0 0 20px #ff4d6d; }
+    }
+
+    /* Fade out saat pindah halaman */
+    .fade-out {
+      animation: fadeOut 0.8s forwards;
+    }
+
+    @keyframes fadeOut {
+      from { opacity: 1; }
+      to { opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-grid">
+    <div class="foto1"></div>
+    <div class="foto2"></div>
+    <div class="foto3"></div>
+    <div class="foto4"></div>
+  </div>
+
+  <div class="overlay"></div>
+
+  <div class="hero">
+    <h1>Hai Tuan Putriku ❤️</h1>
+    <p>Aku bikin web ini khusus buat kamu..<br>
+       Manusia Tercantik di dunia ini yang tak ada bandingannya.</p>
+    <a href="story.html">klick yg ini cantik</a>
+  </div>
+
+  <script>
+    const linkBtn = document.querySelector(".hero a");
+
+    linkBtn.addEventListener("click", function(e) {
+      e.preventDefault(); // hentikan navigasi langsung
+
+      // trigger pulse
+      linkBtn.classList.remove("pulse");
+      void linkBtn.offsetWidth; // force reflow
+      linkBtn.classList.add("pulse");
+
+      // tambah kelas fade-out ke body
+      document.body.classList.add("fade-out");
+
+      // pindah halaman setelah animasi selesai
+      setTimeout(() => {
+        window.location.href = linkBtn.href;
+      }, 800); // durasi animasi fadeOut
+    });
+  </script>
+</body>
+</html>

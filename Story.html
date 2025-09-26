@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Story Cinta</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: url("roses-bg.jpg") no-repeat center center/cover;
+      overflow: hidden;
+      position: relative;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .overlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 1;
+    }
+
+    .story-container {
+      z-index: 2;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      max-width: 800px;
+    }
+
+    .paragraph {
+      font-size: 1.5rem;
+      line-height: 1.8;
+      min-height: 150px;
+    }
+
+    .click-area {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: rgba(255, 0, 100, 0.8);
+      color: white;
+      border-radius: 25px;
+      cursor: pointer;
+      display: inline-block;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 10px rgba(255, 0, 150, 0.7);
+      opacity: 1;  /* tombol selalu terlihat */
+      transform: translateY(0);
+    }
+
+    .click-area.show {
+      animation: fadeSlideUp 0.5s forwards;
+    }
+
+    .click-area:hover {
+      background: rgba(255, 0, 150, 1);
+      box-shadow: 0 0 20px rgba(255, 0, 200, 1), 0 0 40px rgba(255, 0, 200, 0.5);
+    }
+
+    .click-area.pulse {
+      animation: pulse 0.3s;
+    }
+
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    .heart {
+      position: absolute;
+      color: rgba(255, 0, 100, 0.9);
+      font-size: 24px;
+      animation: fall linear forwards;
+      z-index: 0;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(-10vh) scale(1); opacity: 1; }
+      100% { transform: translateY(110vh) scale(1.5); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay"></div>
+  <div class="story-container">
+    <div class="paragraph" id="text"></div>
+    <div class="click-area" id="nextBtn">klick yg ini cantik</div>
+  </div>
+
+  <script>
+    const paragraphs = [
+      "Di antara hiruk pikuk nya dunia ini, aku menemukan arti tentang ketenangan, kamu, iya kamu, kamu yg menjadi obat dari setiap masalah dalam dunia aku.",
+      "Aku masih tidak menduga bisa sedekat ini denganmu, kita yg sudah melewati banyak hal, pasang surutnya dalam hubungan ini, membuat kita sampai di titik ini.",
+      "Terkadang aku keras kepala, hingga membuatmu sangat amat marah kepadaku.",
+      "Jarak bukanlah hambatan bagi aku untuk selalu mencintaimu, aku tidak akan pernah menghentikan rasa sayangku kepadamu.",
+      "Izinkan maaf ini melintasi waktu, izinkan cinta ini terus tumbuh, bukan hanya hari ini, tetapi, tumbuh sepanjang waktu. ❤️"
+    ];
+
+    const buttonTexts = [
+      "klick yg ini cantik",
+      "goodgirll, klick lagi ya",
+      "ih pinterr bangett kamu klick terus",
+      "and finnaly u completed it🥳😉"
+    ];
+
+    let currentIndex = 0;
+    const textEl = document.getElementById("text");
+    const nextBtn = document.getElementById("nextBtn");
+
+    function typeWriter(text, i, callback) {
+      if (i < text.length) {
+        textEl.innerHTML = text.substring(0, i + 1);
+        setTimeout(() => typeWriter(text, i + 1, callback), 40);
+      } else if (callback) {
+        callback();
+      }
+    }
+
+    function showParagraph(index) {
+      textEl.innerHTML = "";
+      typeWriter(paragraphs[index], 0, () => {
+        // trigger animasi fade-slide tombol
+        nextBtn.classList.remove("show");
+        void nextBtn.offsetWidth; // force reflow
+        nextBtn.classList.add("show");
+      });
+    }
+
+    nextBtn.addEventListener("click", () => {
+      // trigger animasi pulse setiap klik
+      nextBtn.classList.remove("pulse");
+      void nextBtn.offsetWidth; // force reflow
+      nextBtn.classList.add("pulse");
+
+      if (currentIndex < paragraphs.length) {
+        showParagraph(currentIndex);
+        if (currentIndex < buttonTexts.length) {
+          nextBtn.innerText = buttonTexts[currentIndex];
+        }
+        currentIndex++;
+      } else {
+        nextBtn.innerText = "and finnaly u completed it🥳😉";
+        nextBtn.style.cursor = "pointer";
+        nextBtn.onclick = () => {
+          window.location.href = "bunga.html";
+        };
+      }
+    });
+
+    // Tampilkan paragraf pertama langsung
+    showParagraph(currentIndex);
+    currentIndex++;
+
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.innerHTML = "❤️";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = (Math.random() * 3 + 2) + "s";
+      document.body.appendChild(heart);
+      setTimeout(() => { heart.remove(); }, 5000);
+    }
+
+    setInterval(createHeart, 500);
+  </script>
+</body>
+</html>

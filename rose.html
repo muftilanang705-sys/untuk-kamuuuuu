@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Mawar Realistis</title>
+  <style>
+    body {
+      margin: 0;
+      background: #000;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .mawar {
+      width: 350px;
+      opacity: 0;
+      transform: scale(0.2) rotate(-15deg);
+      filter: drop-shadow(0 0 25px rgba(255, 0, 100, 0.7));
+      animation: bloom 4s ease-out forwards;
+    }
+
+    @keyframes bloom {
+      0%   { opacity: 0; transform: scale(0.2) rotate(-15deg); }
+      60%  { opacity: 1; transform: scale(1.1) rotate(5deg); }
+      100% { opacity: 1; transform: scale(1) rotate(0deg); }
+    }
+
+    .text-romantis {
+      margin-top: 30px;
+      font-family: "Dancing Script", cursive;
+      font-size: 36px;
+      color: #FFD700;
+      text-shadow: 0 0 15px rgba(255, 215, 0, 0.9);
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 3s ease forwards;
+      animation-delay: 4s; /* muncul setelah bunga mekar */
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- pakai gambar PNG transparan -->
+  <img src="rose.png" class="mawar">
+
+  <div class="text-romantis">
+    "Seperti mawar ini yang mekar indah,<br>
+    cintaku padamu akan selalu abadi 🌹✨"
+  </div>
+
+</body>
+</html>
